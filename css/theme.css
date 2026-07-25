@@ -1,0 +1,2324 @@
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  scrollbar-color: var(--accent) transparent;
+}
+
+:root[data-theme] {
+  --proxy-chrome-bg: color-mix(in srgb, var(--bg-alt) 86%, var(--surface) 14%);
+  --proxy-chrome-strip: color-mix(in srgb, var(--bg-alt) 78%, var(--surface) 22%);
+  --proxy-chrome-surface: color-mix(in srgb, var(--surface) 78%, var(--bg-alt) 22%);
+  --proxy-chrome-surface-2: color-mix(in srgb, var(--surface-2) 76%, var(--surface) 24%);
+  --proxy-chrome-border: color-mix(in srgb, var(--border) 78%, var(--text) 10%);
+  --proxy-chrome-text: var(--text);
+  --proxy-chrome-muted: var(--text-muted);
+  --proxy-tooltip-bg: color-mix(in srgb, var(--surface) 86%, var(--bg-alt) 14%);
+  --proxy-tooltip-preview-bg: color-mix(in srgb, var(--bg-alt) 70%, var(--surface) 30%);
+  --proxy-tooltip-preview-border: color-mix(in srgb, var(--border) 64%, transparent);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 72%, var(--surface) 28%);
+  border: 0;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+body.settings-page {
+  min-height: 100vh;
+  display: block;
+  align-items: initial;
+  justify-content: initial;
+  overflow-x: hidden;
+}
+
+body::before {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+}
+
+body::after {
+  background:
+    linear-gradient(color-mix(in srgb, var(--bg) 38%, transparent), color-mix(in srgb, var(--bg-alt) 50%, transparent)),
+    var(--theme-bg-image);
+  background-position: center;
+  background-size: cover;
+  opacity: var(--theme-bg-opacity, 0);
+  filter: saturate(1.18) brightness(1.08);
+}
+
+html,
+body,
+body * {
+  cursor: var(--cursor-default, url("/css/comic.cur") 0 0), auto !important;
+}
+
+:is(a, button, select, option, input[type="button"], input[type="submit"], input[type="reset"], input[type="checkbox"], input[type="radio"], input[type="file"], label[for], .clickable, .navbar-right a, .navbar-right a img, .game, .game-link, .game-thumbnail, .game-gallery, .headericon-button, .proxy-tab, .bookmark-item, .iframe-action-button):is(:hover, :focus, :active),
+:is(a, button, select, option, input[type="button"], input[type="submit"], input[type="reset"], input[type="checkbox"], input[type="radio"], input[type="file"], label[for], .clickable, .navbar-right a, .navbar-right a img, .game, .game-link, .game-thumbnail, .game-gallery, .headericon-button, .proxy-tab, .bookmark-item, .iframe-action-button) {
+  cursor: var(--cursor-link, url("/css/comiclink.cur") 0 0), pointer !important;
+}
+
+:is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], textarea):is(:hover, :focus, :active),
+:is(input[type="text"], input[type="password"], input[type="email"], input[type="search"], input[type="url"], input[type="tel"], textarea) {
+  cursor: var(--cursor-text, url("/css/comictext.cur") 0 0), text !important;
+}
+
+#goThemeMascot {
+  position: fixed;
+  left: 22px;
+  bottom: -72px;
+  width: min(160px, 14vw);
+  height: auto;
+  opacity: 1;
+  z-index: 10020;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.18s ease;
+}
+
+#goThemeMascot.is-faded {
+  opacity: 0.25;
+}
+
+body.proxy-browser-page #goThemeMascot {
+  display: block;
+  left: 26px;
+  bottom: -66px;
+  width: min(150px, 20vw);
+  z-index: 10031;
+}
+
+.navbar,
+.navbar-right::before,
+.settings-section,
+#panicKeySettings,
+#tabCustomization,
+#tabbar,
+#footer {
+  background-color: color-mix(in srgb, var(--surface) 88%, transparent);
+  border-color: var(--border);
+}
+
+#tabbar {
+  background: var(--proxy-chrome-bg);
+  border-bottom: 0;
+}
+
+.settings-section {
+  box-shadow: none;
+}
+
+.settings-shell {
+  width: min(1120px, calc(100% - 48px));
+  margin: 76px auto 80px;
+}
+
+.settings-header {
+  margin: 0 0 22px;
+  padding: 0 2px;
+}
+
+.settings-header h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.settings-header p {
+  width: min(560px, 100%);
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.settings-page .settings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: minmax(232px, auto);
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.settings-page .settings-section {
+  max-width: none;
+  min-height: 232px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 22px;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, var(--text) 18%);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--text) 14%, transparent),
+    0 12px 30px color-mix(in srgb, #000 16%, transparent);
+  backdrop-filter: blur(8px) saturate(1.08);
+}
+
+.settings-page .settings-section h2 {
+  margin: 0 0 7px;
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.settings-page .settings-section p {
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+
+.settings-page .settings-section label {
+  margin: 10px 0 7px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-page .settings-section select,
+.settings-page .settings-section input[type="url"],
+.settings-page .settings-section input[type="text"],
+.settings-page .settings-section input[type="file"] {
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 12px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text);
+  font-size: 15px;
+  outline: 0;
+}
+
+.settings-page .settings-section select:focus,
+.settings-page .settings-section input[type="url"]:focus,
+.settings-page .settings-section input[type="text"]:focus,
+.settings-page .settings-section input[type="file"]:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--text) 30%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.settings-page .settings-section button {
+  width: fit-content;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-page .settings-section button:hover {
+  background: var(--highlight);
+}
+
+.settings-page .toggle-switch {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.settings-page .toggle-switch label {
+  margin: 0;
+  color: var(--text);
+}
+
+.settings-page .toggle-switch input[type="checkbox"] {
+  width: 48px;
+  height: 26px;
+  flex: 0 0 48px;
+  appearance: none;
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+}
+
+.settings-page .toggle-switch input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.settings-page .toggle-switch input[type="checkbox"]:checked {
+  background: var(--accent);
+}
+
+.settings-page .toggle-switch input[type="checkbox"]:checked::before {
+  transform: translateX(22px);
+  background: var(--text);
+}
+
+.settings-status,
+.settings-note {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.settings-note {
+  margin-top: 12px;
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.settings-page #cloaksettings button,
+.settings-page #themesettings button,
+.settings-page #aboutblanksettings button,
+.settings-page #panickeysettings button {
+  margin-top: 0;
+}
+
+.settings-page #panickeysettings #panicUrlInput + button {
+  margin-top: 12px;
+}
+
+.settings-page #aboutblanksettings button {
+  margin: 4px 0 10px;
+}
+
+.settings-page #aboutblanksettings .settings-note {
+  margin: 0;
+}
+
+.settings-page #panickeysettings p {
+  margin-bottom: 10px;
+}
+
+.settings-page #panickeysettings button {
+  margin: 2px 0 12px;
+}
+
+.settings-page #panickeysettings #currentPanicUrl {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.settings-page #panickeysettings #panicUrlInput {
+  margin-bottom: 12px;
+}
+
+.settings-page #panickeysettings #panicUrlInput + button {
+  margin-top: 0;
+}
+
+.theme-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.settings-page #themesettings .theme-actions button {
+  margin-top: 0;
+}
+
+.settings-page #datamanager .settings-actions button {
+  flex: 0 1 auto;
+  width: auto;
+}
+
+.settings-page #cloakSelect,
+.settings-page #proxySelect,
+.settings-page #themeSelect,
+.settings-page #panicUrlInput {
+  width: 100%;
+  min-height: 44px;
+  display: block;
+  margin: 0 0 12px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text);
+  font-size: 15px;
+}
+
+.settings-page #cloakSelect option,
+.settings-page #proxySelect option,
+.settings-page #themeSelect option {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+.settings-page #panickeysettings button:last-of-type {
+  display: inline-flex;
+  margin-left: 0;
+}
+
+.settings-page #mobilesettings input[type="checkbox"] {
+  width: 48px;
+  height: 26px;
+  flex: 0 0 48px;
+  appearance: none;
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-alt);
+}
+
+.settings-page #mobilesettings input[type="checkbox"]::before {
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--text-muted);
+}
+
+.settings-page #mobilesettings input[type="checkbox"]:checked {
+  background: var(--accent);
+}
+
+.settings-page #mobilesettings input[type="checkbox"]:checked::before {
+  transform: translateX(22px);
+  background: var(--text);
+}
+
+.settings-section h2,
+.settings-section h3,
+.proxy-tab.is-active {
+  color: var(--text);
+}
+
+.settings-section p,
+.proxy-tab,
+.theme-muted {
+  color: var(--text-muted);
+}
+
+.settings-section button,
+#new-tab-button {
+  background-color: var(--accent);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.settings-section button:hover,
+#new-tab-button:hover {
+  background-color: var(--highlight);
+}
+
+.settings-page input[type="text"],
+.settings-page input[type="file"],
+.settings-page input[type="url"],
+.settings-page select,
+.search-bar,
+.proxy-tab.is-active {
+  background-color: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.proxy-tab {
+  background: transparent;
+  border-color: transparent;
+  color: var(--proxy-chrome-muted);
+}
+
+#new-tab-button {
+  background: transparent;
+  border-color: transparent;
+  color: var(--proxy-chrome-muted);
+}
+
+#new-tab-button:hover {
+  background: var(--proxy-chrome-surface);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+}
+
+#new-tab-button:active {
+  background: color-mix(in srgb, var(--proxy-chrome-surface) 80%, #000 20%);
+  border-color: transparent;
+}
+
+.proxy-tab:hover {
+  background: var(--proxy-chrome-surface);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+}
+
+.proxy-tab.is-active {
+  background: var(--proxy-chrome-surface-2);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--proxy-chrome-text) 5%, transparent);
+}
+
+.proxy-tab:active {
+  background: color-mix(in srgb, var(--proxy-chrome-surface) 80%, #000 20%);
+  border-color: transparent;
+}
+
+.proxy-tab.is-dragging {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.proxy-tab-drag-ghost {
+  background: var(--proxy-chrome-surface-2);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+  box-shadow: 0 10px 20px color-mix(in srgb, #000 28%, transparent);
+}
+
+#tabs-list .proxy-tab:not(:first-child)::before {
+  background: color-mix(in srgb, var(--proxy-chrome-border) 54%, transparent);
+}
+
+.proxy-tab-icon,
+.proxy-tab-audio,
+.proxy-tab-close {
+  color: var(--text-muted);
+}
+
+.proxy-tab:hover .proxy-tab-icon,
+.proxy-tab:hover .proxy-tab-audio,
+.proxy-tab:hover .proxy-tab-close,
+.proxy-tab.is-active .proxy-tab-icon,
+.proxy-tab.is-active .proxy-tab-audio,
+.proxy-tab.is-active .proxy-tab-close {
+  color: var(--text);
+}
+
+#bookmarkbar {
+  background: var(--proxy-chrome-strip);
+  border-bottom: 0;
+}
+
+.bookmark-item {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+.bookmark-item:hover {
+  background: color-mix(in srgb, var(--proxy-chrome-surface) 65%, transparent);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+}
+
+.bookmark-drag-ghost {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--text);
+  box-shadow: none !important;
+  opacity: 0.65;
+}
+
+.bookmark-folder.is-open,
+.bookmark-item.is-open {
+  background: color-mix(in srgb, var(--proxy-chrome-surface-2) 70%, transparent);
+  border-color: transparent;
+  color: var(--proxy-chrome-text);
+}
+
+.bookmark-item-icon {
+  color: var(--text-muted);
+}
+
+.bookmark-item:hover .bookmark-item-icon,
+.bookmark-folder.is-open .bookmark-item-icon {
+  color: var(--text);
+}
+
+#bookmark-toggle.headericon-button {
+  color: var(--text-muted);
+}
+
+#bookmark-toggle.headericon-button:hover,
+#bookmark-toggle.headericon-button.is-bookmarked {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  color: var(--text);
+}
+
+#bookmark-editor {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+#bookmark-editor button {
+  color: var(--text);
+}
+
+#bookmark-editor button {
+  background: var(--accent);
+  border-color: var(--border);
+}
+
+#bookmark-editor button:hover {
+  background: var(--highlight);
+}
+
+.bookmark-menu,
+.bookmark-folder-popover,
+.bookmark-folder-dialog {
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg-alt) 4%);
+  border-color: transparent;
+  color: var(--text);
+  box-shadow: 0 12px 28px color-mix(in srgb, #000 28%, transparent);
+}
+
+.bookmark-folder-popover {
+  border-color: transparent;
+}
+
+.bookmark-menu button,
+.bookmark-folder-dialog h2,
+.bookmark-folder-popover-header {
+  color: var(--text);
+}
+
+.bookmark-menu button i {
+  color: var(--text-muted);
+}
+
+.bookmark-menu button:hover,
+.bookmark-folder-child-remove:hover {
+  background: color-mix(in srgb, var(--surface-2) 48%, transparent);
+  color: var(--text);
+}
+
+.bookmark-menu button:hover i {
+  color: var(--text);
+}
+
+.bookmark-folder-dialog label,
+.bookmark-folder-empty,
+.bookmark-folder-child-remove {
+  color: var(--text-muted);
+}
+
+.bookmark-folder-dialog input {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.bookmark-folder-dialog input:focus {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--text) 18%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 70%, var(--text) 18%);
+}
+
+.bookmark-folder-dialog-actions button {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--border) 68%, transparent);
+  color: var(--text);
+}
+
+.bookmark-folder-dialog-actions button[type="submit"] {
+  background: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 78%, var(--border) 22%);
+}
+
+.bookmark-folder-dialog-actions button:hover {
+  background: color-mix(in srgb, var(--surface-2) 62%, transparent);
+}
+
+.bookmark-folder-dialog-actions button[type="submit"]:hover {
+  background: var(--highlight);
+}
+
+.bookmark-folder-popover-header {
+  border-bottom-color: transparent;
+}
+
+.bookmark-item.is-folder-child,
+.bookmark-item.is-folder-child:hover {
+  border-color: transparent;
+}
+
+.bookmark-item.is-folder-child:hover {
+  background: color-mix(in srgb, var(--surface-2) 62%, transparent);
+}
+
+.search-bar {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow: none;
+}
+
+#searchInput.search-bar {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.search-bar::placeholder {
+  color: var(--text-muted);
+}
+
+#searchInput.search-bar::placeholder {
+  color: var(--text-muted);
+}
+
+.search-bar:hover,
+.search-bar:focus {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+#searchInput.search-bar:hover,
+#searchInput.search-bar:focus {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.autocomplete-list {
+  background: var(--surface);
+  border: 0;
+  box-shadow: none;
+  scrollbar-color: var(--border) transparent;
+  padding: 6px;
+}
+
+.autocomplete-list:empty {
+  display: none !important;
+  border: 0;
+  box-shadow: none;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 0;
+}
+
+.autocomplete-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.autocomplete-item {
+  color: var(--text);
+  border-radius: 7px;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.is-active {
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+}
+
+.autocomplete-item__title,
+.autocomplete-item span,
+.game h3,
+.app h3,
+h4,
+#searchCount {
+  color: var(--text) !important;
+}
+
+.autocomplete-item__meta {
+  color: var(--text-muted);
+}
+
+.legal-links {
+  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
+}
+
+.legal-trigger {
+  background: transparent;
+  border: 0;
+  color: color-mix(in srgb, var(--text-muted) 72%, transparent);
+  box-shadow: none;
+}
+
+.legal-trigger:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+.legal-links__divider::before {
+  color: color-mix(in srgb, var(--text-muted) 35%, transparent);
+}
+
+.info-modal__backdrop {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(8px);
+  transition: none;
+}
+
+.info-dialog {
+  background: color-mix(in srgb, var(--surface) 94%, var(--bg) 6%);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow: 0 18px 48px color-mix(in srgb, #000 28%, transparent);
+}
+
+.info-dialog__header h2 {
+  color: var(--text);
+}
+
+.info-panel p {
+  color: var(--text-muted);
+}
+
+.info-panel a {
+  color: color-mix(in srgb, var(--accent) 45%, var(--text) 55%) !important;
+}
+
+.info-dialog__close {
+  color: var(--text-muted);
+}
+
+.info-dialog__close:hover {
+  color: var(--text);
+}
+
+.index-page #uv-address {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.index-page #uv-address::placeholder {
+  color: var(--text-muted);
+}
+
+.index-page #uv-address:hover,
+.index-page #uv-address:focus {
+  background: var(--surface-2);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--text) 24%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+#newtab-landing,
+#history-page {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+#newtab-landing h1,
+#history-page-header h1 {
+  color: var(--text);
+}
+
+#newtab-landing p,
+#historySearchClear,
+.history-row-time,
+.history-row-icon,
+.history-row-delete,
+#historyPageClearBtn {
+  color: var(--text-muted);
+}
+
+#history-search-form {
+  border-bottom-color: transparent;
+  color: var(--text);
+}
+
+#history-search-form input,
+.history-row-title {
+  color: var(--text);
+}
+
+.history-row-url {
+  color: var(--text-muted);
+}
+
+#history-page-header,
+.history-row {
+  border-bottom-color: transparent;
+}
+
+.history-row {
+  color: var(--text);
+}
+
+.history-row:hover {
+  background: color-mix(in srgb, var(--surface) 34%, transparent);
+}
+
+#footer,
+#footer-toggle {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-color: transparent;
+}
+
+#footer {
+  border-top: 0;
+}
+
+#footer-toggle {
+  border: 0;
+}
+
+#footer input {
+  background: var(--bg-alt);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+#footer input:focus,
+body.search-focused #footer input {
+  background: var(--bg-alt);
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--text) 22%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+#footer-toggle,
+#footer .headericons {
+  color: var(--text);
+}
+
+#proxy-tab-tooltip {
+  background: var(--proxy-tooltip-bg);
+  border-color: var(--proxy-chrome-border);
+  color: var(--proxy-chrome-text);
+}
+
+.proxy-tab-tooltip-url,
+.proxy-tab-audio,
+.proxy-tab-close,
+.proxy-tab-icon {
+  color: var(--proxy-chrome-muted);
+}
+
+.proxy-tab-tooltip-title {
+  color: var(--proxy-chrome-text);
+}
+
+.proxy-tab-tooltip-preview {
+  border-top-color: var(--proxy-tooltip-preview-border);
+  background: var(--proxy-tooltip-preview-bg);
+}
+
+.proxy-tab-tooltip-preview.is-fallback {
+  background: var(--proxy-tooltip-preview-bg);
+}
+
+.proxy-tab-tooltip-preview-icon {
+  background: var(--proxy-chrome-surface-2);
+  color: var(--proxy-chrome-muted);
+}
+
+.iframe-container {
+  background: var(--surface);
+}
+
+.gameframe {
+  background: var(--bg-alt);
+}
+
+.bottom-bar {
+  background-color: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-top: 1px solid var(--border);
+  box-shadow: none;
+}
+
+#iframeicons,
+#fullscreen,
+#copylink,
+#downloadgame,
+#modupload,
+#aboutblank,
+.iframe-action-button {
+  background-color: var(--accent);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+#iframeicons:hover,
+#fullscreen:hover,
+#copylink:hover,
+#downloadgame:hover,
+#modupload:hover,
+#aboutblank:hover,
+.iframe-action-button:hover {
+  background-color: var(--highlight);
+}
+
+.iframe-container {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+#copylink.copied {
+  background-color: color-mix(in srgb, var(--accent) 42%, transparent) !important;
+  color: var(--text) !important;
+}
+
+.not-found-page .content,
+.not-found-page h1 {
+  color: var(--text);
+}
+
+.not-found-page p {
+  color: var(--text-muted);
+}
+
+.button-container button {
+  background: var(--accent);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.button-container button:hover {
+  background: var(--highlight);
+  border-color: var(--border);
+}
+
+body:has(#game) {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+body:has(#game) #goThemeMascot {
+  display: none !important;
+}
+
+body:has(#game) .btn,
+body:has(#game) .settings-icon,
+body:has(#game) .fullscreenicon {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  border-color: color-mix(in srgb, var(--border) 82%, transparent);
+  color: var(--text);
+}
+
+body:has(#game) .btn.active,
+body:has(#game) .settings-icon:hover,
+body:has(#game) .fullscreenicon:hover,
+body:has(#game) .fullscreenicon.isactive {
+  background: color-mix(in srgb, var(--accent) 42%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+body:has(#game) .btn.drag-mode {
+  border-color: var(--accent);
+}
+
+body:has(#game) .joy-stick,
+body:has(#game) .camera-stick {
+  background: color-mix(in srgb, var(--accent) 42%, transparent);
+  border-color: color-mix(in srgb, var(--text) 28%, transparent);
+}
+
+body:has(#game) .joy.active .joy-stick,
+body:has(#game) .camera.active .camera-stick {
+  background: color-mix(in srgb, var(--accent) 62%, transparent);
+}
+
+body:has(#game) .panel {
+  background: color-mix(in srgb, var(--surface) 96%, var(--bg-alt) 4%);
+  color: var(--text);
+  border-left-color: color-mix(in srgb, var(--border) 72%, transparent);
+  scrollbar-color: color-mix(in srgb, var(--accent) 48%, transparent) transparent;
+}
+
+body:has(#game) .panel::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 52%, transparent);
+  border: 0;
+}
+
+body:has(#game) .panel-head,
+body:has(#game) .section {
+  border-color: color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+body:has(#game) .section-title {
+  color: color-mix(in srgb, var(--accent) 58%, var(--text) 42%);
+}
+
+body:has(#game) .close-btn,
+body:has(#game) .toggle-btn {
+  color: var(--text-muted);
+}
+
+body:has(#game) .close-btn:hover,
+body:has(#game) .toggle-btn:hover {
+  color: var(--text);
+}
+
+body:has(#game) .toggle-wrap {
+  align-items: center;
+}
+
+body:has(#game) .toggle-btn,
+body:has(#game) .btn-action,
+body:has(#game) .del-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+body:has(#game) .toggle-btn {
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+body:has(#game) .btn-action {
+  min-height: 40px;
+  padding: 0 12px;
+}
+
+body:has(#game) input[type="range"] {
+  background: transparent;
+  accent-color: var(--accent);
+}
+
+body:has(#game) input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+}
+
+body:has(#game) input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 50%;
+}
+
+body:has(#game) input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: color-mix(in srgb, var(--text) 13%, transparent);
+  border: 0;
+  border-radius: 999px;
+}
+
+body:has(#game) input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: color-mix(in srgb, var(--text) 13%, transparent);
+  border: 0;
+  border-radius: 999px;
+}
+
+body:has(#game) input[type="range"]::-moz-range-progress {
+  height: 4px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+}
+
+body:has(#game) input[type="text"],
+body:has(#game) select,
+body:has(#game) .toggle-btn,
+body:has(#game) .custom-item,
+body:has(#game) .btn-action,
+body:has(#game) .del-btn {
+  background: color-mix(in srgb, var(--bg-alt) 72%, transparent);
+  border-color: color-mix(in srgb, var(--border) 74%, transparent);
+  color: var(--text);
+}
+
+body:has(#game) input[type="text"]:focus,
+body:has(#game) select:focus,
+body:has(#game) .toggle-btn:hover,
+body:has(#game) .toggle-btn.active,
+body:has(#game) .btn-action:hover,
+body:has(#game) .btn-action.primary,
+body:has(#game) .del-btn:hover {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 56%, transparent);
+}
+
+body:has(#game) .toggle-btn.active,
+body:has(#game) .btn-action.primary {
+  color: var(--text);
+}
+
+body:has(#game) .btn-action.danger {
+  background: color-mix(in srgb, #ff6464 14%, transparent);
+  border-color: color-mix(in srgb, #ff6464 34%, transparent);
+}
+
+body:has(#game) select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+#themeReset {
+  display: inline-flex;
+  width: auto;
+}
+
+:root[data-theme="frutiger-aero"] body {
+  background-color: #8bd8ff;
+  color: #06386a;
+  font-family: "Segoe UI", "Frutiger", "Trebuchet MS", Arial, sans-serif;
+}
+
+:root[data-theme="frutiger-aero"] body::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 12%, transparent 12% 100%),
+    linear-gradient(215deg, rgba(104, 217, 31, 0.24), rgba(8, 168, 238, 0.16) 42%, transparent 74%);
+  opacity: 0.95;
+}
+
+:root[data-theme="frutiger-aero"] body::after {
+  filter: saturate(1.28) brightness(1.12);
+  opacity: 0.72;
+}
+
+:root[data-theme="frutiger-aero"] h1,
+:root[data-theme="frutiger-aero"] h2,
+:root[data-theme="frutiger-aero"] h3,
+:root[data-theme="frutiger-aero"] h4,
+:root[data-theme="frutiger-aero"] .game h3,
+:root[data-theme="frutiger-aero"] .app h3,
+:root[data-theme="frutiger-aero"] #searchCount {
+  color: #06386a !important;
+  text-shadow: none;
+}
+
+:root[data-theme="frutiger-aero"] p,
+:root[data-theme="frutiger-aero"] label,
+:root[data-theme="frutiger-aero"] .settings-status,
+:root[data-theme="frutiger-aero"] .settings-note,
+:root[data-theme="frutiger-aero"] .autocomplete-item__meta {
+  color: #2c718d;
+  text-shadow: none;
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section,
+:root[data-theme="frutiger-aero"] .container,
+:root[data-theme="frutiger-aero"] .content,
+:root[data-theme="frutiger-aero"] .game-gallery,
+:root[data-theme="frutiger-aero"] .browser-window,
+:root[data-theme="frutiger-aero"] #newtab-landing,
+:root[data-theme="frutiger-aero"] #history-page,
+:root[data-theme="frutiger-aero"] .autocomplete-list,
+:root[data-theme="frutiger-aero"] .info-dialog,
+:root[data-theme="frutiger-aero"] #bookmark-editor {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(218, 250, 255, 0.78) 48%, rgba(151, 228, 255, 0.72)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(104, 217, 31, 0.16));
+  border: 1px solid rgba(36, 168, 232, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(30, 129, 202, 0.18),
+    0 12px 28px rgba(8, 102, 178, 0.22);
+  backdrop-filter: blur(8px) saturate(1.35);
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section,
+:root[data-theme="frutiger-aero"] .game-link,
+:root[data-theme="frutiger-aero"] .game-thumbnail,
+:root[data-theme="frutiger-aero"] .app img,
+:root[data-theme="frutiger-aero"] .info-dialog {
+  border-radius: 14px;
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section {
+  position: relative;
+  overflow: hidden;
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section::before,
+:root[data-theme="frutiger-aero"] .game-link::after,
+:root[data-theme="frutiger-aero"] .iframe-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section::before,
+:root[data-theme="frutiger-aero"] .iframe-container::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.2) 28%, transparent 29%),
+    linear-gradient(120deg, transparent 0 52%, rgba(255, 255, 255, 0.34) 53% 63%, transparent 64%);
+}
+
+:root[data-theme="frutiger-aero"] .navbar,
+:root[data-theme="frutiger-aero"] .navbar-right::before,
+:root[data-theme="frutiger-aero"] #tabbar,
+:root[data-theme="frutiger-aero"] #footer,
+:root[data-theme="frutiger-aero"] #footer-toggle,
+:root[data-theme="frutiger-aero"] .bottom-bar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(173, 235, 255, 0.82) 42%, rgba(14, 139, 223, 0.9));
+  border-color: rgba(255, 255, 255, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 24px rgba(0, 99, 182, 0.28);
+  backdrop-filter: blur(10px) saturate(1.45);
+}
+
+:root[data-theme="frutiger-aero"] .navbar-right::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(110, 219, 255, 0.86) 46%, rgba(9, 120, 216, 0.94));
+}
+
+:root[data-theme="frutiger-aero"] button,
+:root[data-theme="frutiger-aero"] input[type="button"],
+:root[data-theme="frutiger-aero"] input[type="submit"],
+:root[data-theme="frutiger-aero"] .settings-page .settings-section button,
+:root[data-theme="frutiger-aero"] .button-container button,
+:root[data-theme="frutiger-aero"] .btn,
+:root[data-theme="frutiger-aero"] .btn-action,
+:root[data-theme="frutiger-aero"] .toggle-btn,
+:root[data-theme="frutiger-aero"] .close-btn,
+:root[data-theme="frutiger-aero"] .headericon-button,
+:root[data-theme="frutiger-aero"] .navbtn,
+:root[data-theme="frutiger-aero"] #new-tab-button,
+:root[data-theme="frutiger-aero"] .iframe-action-button,
+:root[data-theme="frutiger-aero"] #iframeicons,
+:root[data-theme="frutiger-aero"] #fullscreen,
+:root[data-theme="frutiger-aero"] #copylink,
+:root[data-theme="frutiger-aero"] #downloadgame,
+:root[data-theme="frutiger-aero"] #modupload,
+:root[data-theme="frutiger-aero"] #aboutblank {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(135, 228, 255, 0.92) 42%, rgba(4, 150, 224, 0.94));
+  border: 1px solid rgba(6, 119, 200, 0.72);
+  color: #053a72;
+  text-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    inset 0 -2px 0 rgba(0, 87, 171, 0.22),
+    0 5px 14px rgba(8, 102, 178, 0.2);
+}
+
+:root[data-theme="frutiger-aero"] button:hover,
+:root[data-theme="frutiger-aero"] input[type="button"]:hover,
+:root[data-theme="frutiger-aero"] input[type="submit"]:hover,
+:root[data-theme="frutiger-aero"] .settings-page .settings-section button:hover,
+:root[data-theme="frutiger-aero"] .button-container button:hover,
+:root[data-theme="frutiger-aero"] .btn:hover,
+:root[data-theme="frutiger-aero"] .btn-action:hover,
+:root[data-theme="frutiger-aero"] .toggle-btn:hover,
+:root[data-theme="frutiger-aero"] .headericon-button:hover,
+:root[data-theme="frutiger-aero"] .navbtn:hover,
+:root[data-theme="frutiger-aero"] .iframe-action-button:hover {
+  background:
+    linear-gradient(180deg, #ffffff, #b8f25b 42%, #08a8ee);
+  border-color: rgba(75, 180, 21, 0.82);
+  color: #03335e;
+}
+
+:root[data-theme="frutiger-aero"] input,
+:root[data-theme="frutiger-aero"] select,
+:root[data-theme="frutiger-aero"] textarea,
+:root[data-theme="frutiger-aero"] .search-bar,
+:root[data-theme="frutiger-aero"] #searchInput.search-bar,
+:root[data-theme="frutiger-aero"] .index-page .search-bar,
+:root[data-theme="frutiger-aero"] #footer input,
+:root[data-theme="frutiger-aero"] #teacher-setup-dialogs-container-searchbar,
+:root[data-theme="frutiger-aero"] #uv-address,
+:root[data-theme="frutiger-aero"] #history-search-form input,
+:root[data-theme="frutiger-aero"] .settings-page #cloakSelect,
+:root[data-theme="frutiger-aero"] .settings-page #proxySelect,
+:root[data-theme="frutiger-aero"] .settings-page #themeSelect,
+:root[data-theme="frutiger-aero"] .settings-page #panicUrlInput {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(219, 249, 255, 0.96)) !important;
+  border: 1px solid rgba(36, 168, 232, 0.76) !important;
+  color: #06386a !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 79, 146, 0.16),
+    0 0 0 3px rgba(255, 255, 255, 0.26) !important;
+}
+
+:root[data-theme="frutiger-aero"] input::placeholder,
+:root[data-theme="frutiger-aero"] textarea::placeholder,
+:root[data-theme="frutiger-aero"] .search-bar::placeholder,
+:root[data-theme="frutiger-aero"] #uv-address::placeholder {
+  color: rgba(44, 113, 141, 0.78);
+}
+
+:root[data-theme="frutiger-aero"] select option {
+  background: #e7fbff;
+  color: #06386a;
+}
+
+:root[data-theme="frutiger-aero"] .game,
+:root[data-theme="frutiger-aero"] .app {
+  background: transparent;
+}
+
+:root[data-theme="frutiger-aero"] .game-link,
+:root[data-theme="frutiger-aero"] .app a {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(207, 247, 255, 0.72));
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    0 10px 22px rgba(0, 101, 180, 0.28);
+}
+
+:root[data-theme="frutiger-aero"] .game-link::after {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(145deg, transparent 0 50%, rgba(255, 255, 255, 0.28) 51% 62%, transparent 63%);
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+:root[data-theme="frutiger-aero"] .game-link::before {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+:root[data-theme="frutiger-aero"] .game:hover .game-link {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    0 14px 28px rgba(8, 168, 238, 0.34),
+    0 0 0 3px rgba(184, 242, 91, 0.38);
+}
+
+:root[data-theme="frutiger-aero"] .game:hover .game-link::after {
+  opacity: 0.72;
+}
+
+:root[data-theme="frutiger-aero"] .iframe-container {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(183, 238, 255, 0.78));
+  border: 1px solid rgba(36, 168, 232, 0.76);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    0 14px 30px rgba(0, 94, 171, 0.28);
+}
+
+:root[data-theme="frutiger-aero"] .gameframe,
+:root[data-theme="frutiger-aero"] #gameframe,
+:root[data-theme="frutiger-aero"] #iframeid {
+  background: #d7f8ff;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+}
+
+:root[data-theme="frutiger-aero"] .bottom-bar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(129, 225, 255, 0.82) 42%, rgba(8, 143, 221, 0.92));
+}
+
+:root[data-theme="frutiger-aero"] body::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 42%),
+    linear-gradient(135deg, rgba(92, 205, 255, 0.12), rgba(126, 220, 58, 0.1));
+  opacity: 0.7;
+}
+
+:root[data-theme="frutiger-aero"] body::after {
+  filter: saturate(1.12) brightness(1.04);
+  opacity: 0.62;
+}
+
+:root[data-theme="frutiger-aero"] .content,
+:root[data-theme="frutiger-aero"] .container,
+:root[data-theme="frutiger-aero"] .game-gallery {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section,
+:root[data-theme="frutiger-aero"] .browser-window,
+:root[data-theme="frutiger-aero"] #newtab-landing,
+:root[data-theme="frutiger-aero"] #history-page,
+:root[data-theme="frutiger-aero"] .autocomplete-list,
+:root[data-theme="frutiger-aero"] .info-dialog,
+:root[data-theme="frutiger-aero"] #bookmark-editor {
+  background: rgba(220, 248, 255, 0.68) !important;
+  border: 1px solid rgba(39, 156, 218, 0.52);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    0 8px 20px rgba(0, 93, 155, 0.16);
+  backdrop-filter: blur(5px) saturate(1.14);
+}
+
+:root[data-theme="frutiger-aero"] .settings-page .settings-section::before,
+:root[data-theme="frutiger-aero"] .iframe-container::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 30%);
+}
+
+:root[data-theme="frutiger-aero"] .navbar,
+:root[data-theme="frutiger-aero"] .navbar-right::before,
+:root[data-theme="frutiger-aero"] #tabbar,
+:root[data-theme="frutiger-aero"] #footer,
+:root[data-theme="frutiger-aero"] #footer-toggle,
+:root[data-theme="frutiger-aero"] .bottom-bar {
+  background: rgba(40, 156, 220, 0.78) !important;
+  border-color: rgba(213, 249, 255, 0.56);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 6px 16px rgba(0, 77, 142, 0.18);
+}
+
+:root[data-theme="frutiger-aero"] button,
+:root[data-theme="frutiger-aero"] input[type="button"],
+:root[data-theme="frutiger-aero"] input[type="submit"],
+:root[data-theme="frutiger-aero"] .settings-page .settings-section button,
+:root[data-theme="frutiger-aero"] .button-container button,
+:root[data-theme="frutiger-aero"] .btn,
+:root[data-theme="frutiger-aero"] .btn-action,
+:root[data-theme="frutiger-aero"] .toggle-btn,
+:root[data-theme="frutiger-aero"] .close-btn,
+:root[data-theme="frutiger-aero"] .headericon-button,
+:root[data-theme="frutiger-aero"] .navbtn,
+:root[data-theme="frutiger-aero"] #new-tab-button,
+:root[data-theme="frutiger-aero"] .iframe-action-button,
+:root[data-theme="frutiger-aero"] #iframeicons,
+:root[data-theme="frutiger-aero"] #fullscreen,
+:root[data-theme="frutiger-aero"] #copylink,
+:root[data-theme="frutiger-aero"] #downloadgame,
+:root[data-theme="frutiger-aero"] #modupload,
+:root[data-theme="frutiger-aero"] #aboutblank {
+  background: linear-gradient(180deg, #dff8ff, #54c4ec) !important;
+  border-color: rgba(8, 116, 185, 0.62);
+  color: #053a72;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.68),
+    0 3px 8px rgba(0, 91, 155, 0.18);
+}
+
+:root[data-theme="frutiger-aero"] button:hover,
+:root[data-theme="frutiger-aero"] input[type="button"]:hover,
+:root[data-theme="frutiger-aero"] input[type="submit"]:hover,
+:root[data-theme="frutiger-aero"] .settings-page .settings-section button:hover,
+:root[data-theme="frutiger-aero"] .button-container button:hover,
+:root[data-theme="frutiger-aero"] .btn:hover,
+:root[data-theme="frutiger-aero"] .btn-action:hover,
+:root[data-theme="frutiger-aero"] .toggle-btn:hover,
+:root[data-theme="frutiger-aero"] .headericon-button:hover,
+:root[data-theme="frutiger-aero"] .navbtn:hover,
+:root[data-theme="frutiger-aero"] .iframe-action-button:hover {
+  background: linear-gradient(180deg, #ecfbff, #75d33d) !important;
+}
+
+:root[data-theme="frutiger-aero"] input,
+:root[data-theme="frutiger-aero"] select,
+:root[data-theme="frutiger-aero"] textarea,
+:root[data-theme="frutiger-aero"] .search-bar,
+:root[data-theme="frutiger-aero"] #searchInput.search-bar,
+:root[data-theme="frutiger-aero"] .index-page .search-bar,
+:root[data-theme="frutiger-aero"] #footer input,
+:root[data-theme="frutiger-aero"] #teacher-setup-dialogs-container-searchbar,
+:root[data-theme="frutiger-aero"] #uv-address,
+:root[data-theme="frutiger-aero"] #history-search-form input,
+:root[data-theme="frutiger-aero"] .settings-page #cloakSelect,
+:root[data-theme="frutiger-aero"] .settings-page #proxySelect,
+:root[data-theme="frutiger-aero"] .settings-page #themeSelect,
+:root[data-theme="frutiger-aero"] .settings-page #panicUrlInput {
+  background: rgba(224, 249, 255, 0.78) !important;
+  border-color: rgba(36, 168, 232, 0.54) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 79, 146, 0.12),
+    0 0 0 2px rgba(255, 255, 255, 0.18) !important;
+}
+
+:root[data-theme="frutiger-aero"] .game-link,
+:root[data-theme="frutiger-aero"] .app a {
+  background: rgba(198, 239, 248, 0.32) !important;
+  border-color: rgba(232, 254, 255, 0.54);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 7px 16px rgba(0, 98, 168, 0.18);
+}
+
+:root[data-theme="frutiger-aero"] .game-link::after {
+  background: rgba(255, 255, 255, 0.12);
+  opacity: 1;
+}
+
+:root[data-theme="frutiger-aero"] .iframe-container {
+  background: rgba(205, 243, 250, 0.34) !important;
+  border-color: rgba(36, 168, 232, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    0 10px 22px rgba(0, 94, 171, 0.2);
+}
+
+:root[data-theme="frutiger-aero"] .gameframe,
+:root[data-theme="frutiger-aero"] #gameframe,
+:root[data-theme="frutiger-aero"] #iframeid {
+  background: rgba(215, 248, 255, 0.5) !important;
+}
+
+:root[data-theme="super-mario-64"] body::before {
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, #ffffff 42%, transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, #ffffff 42%, transparent) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, color-mix(in srgb, #0b0b0b 24%, transparent) 75%),
+    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, #0b0b0b 24%, transparent) 75%);
+  background-position: 0 0, 0 18px, 18px -18px, -18px 0;
+  background-size: 36px 36px;
+  opacity: 0.24;
+}
+
+:root[data-theme="super-mario-64"] .settings-header h1,
+:root[data-theme="super-mario-64"] .settings-header p {
+  text-shadow:
+    0 2px 0 color-mix(in srgb, #050a60 70%, transparent),
+    0 0 16px color-mix(in srgb, #050a60 52%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section,
+:root[data-theme="super-mario-64"] .navbar,
+:root[data-theme="super-mario-64"] .navbar-right::before {
+  border-color: #f7df00;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 24%, transparent),
+    0 0 0 2px color-mix(in srgb, #e9270a 42%, transparent),
+    0 14px 26px color-mix(in srgb, #050a60 24%, transparent);
+}
+
+:root[data-theme="wii"] body {
+  background-color: #f7f7f5;
+}
+
+:root[data-theme="wii"] body::after {
+  filter: saturate(1.08) brightness(1.14);
+}
+
+:root[data-theme="wii"] .settings-header h1,
+:root[data-theme="wii"] .settings-header p {
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+:root[data-theme="wii"] .settings-page .settings-section,
+:root[data-theme="wii"] .navbar,
+:root[data-theme="wii"] .navbar-right::before {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, var(--surface-2) 82%, transparent));
+  border-color: color-mix(in srgb, var(--accent) 76%, #ffffff 24%);
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 8px 20px color-mix(in srgb, #159ccd 16%, transparent);
+}
+
+:root[data-theme="wii"] .navbar-right::before {
+  background: linear-gradient(180deg, #21b9e9, #0f83b2);
+  border-color: #0e7ba8;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 40%, transparent),
+    0 10px 24px color-mix(in srgb, #159ccd 28%, transparent);
+}
+
+:root[data-theme="wii"] .settings-page .settings-section button,
+:root[data-theme="wii"] #new-tab-button,
+:root[data-theme="wii"] .iframe-action-button {
+  background: linear-gradient(180deg, #24b9e4, #0d88b6);
+  color: #ffffff;
+  border-color: #0d78a3;
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section {
+  border-color: #d39a55;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #8ed400 18%, transparent), color-mix(in srgb, var(--surface) 84%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff6cf 35%, transparent),
+    0 0 0 2px color-mix(in srgb, #5a351b 50%, transparent),
+    0 14px 28px color-mix(in srgb, #2f1a0e 26%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section select,
+:root[data-theme="cut-the-rope"] .settings-page .settings-section input[type="url"],
+:root[data-theme="cut-the-rope"] .settings-page .settings-section input[type="text"],
+:root[data-theme="cut-the-rope"] .settings-page .settings-section input[type="file"] {
+  background: color-mix(in srgb, #eaf8ff 86%, transparent);
+  border-color: #9c6935;
+  color: #39230f;
+}
+
+:root[data-theme="cut-the-rope"] .settings-page #cloakSelect,
+:root[data-theme="cut-the-rope"] .settings-page #proxySelect,
+:root[data-theme="cut-the-rope"] .settings-page #themeSelect,
+:root[data-theme="cut-the-rope"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, #eaf8ff 86%, transparent);
+  border-color: #9c6935;
+  color: #39230f;
+}
+
+:root[data-theme="cut-the-rope"] .settings-page #cloakSelect option,
+:root[data-theme="cut-the-rope"] .settings-page #proxySelect option,
+:root[data-theme="cut-the-rope"] .settings-page #themeSelect option {
+  background: #eaf8ff;
+  color: #39230f;
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section button,
+:root[data-theme="cut-the-rope"] #new-tab-button {
+  background: linear-gradient(180deg, #b1ec1b, #5f9b12);
+  color: #ffffff;
+  border-color: #78471f;
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, #4d2d14 54%, transparent);
+}
+
+:root[data-theme="doodle"] body::after {
+  opacity: 0.62;
+  filter: saturate(1.08) brightness(1.12);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section,
+:root[data-theme="doodle"] .navbar,
+:root[data-theme="doodle"] .navbar-right::before {
+  border: 2px dashed #151515;
+  background: color-mix(in srgb, #fffdf8 88%, transparent);
+  box-shadow:
+    5px 5px 0 color-mix(in srgb, var(--accent) 82%, transparent),
+    inset 0 0 0 2px color-mix(in srgb, #151515 12%, transparent);
+}
+
+:root[data-theme="doodle"] .navbar-right::before {
+  background: #151515;
+  border: 2px dashed #fffdf8;
+  box-shadow: 5px 5px 0 var(--accent);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section select,
+:root[data-theme="doodle"] .settings-page .settings-section input[type="url"],
+:root[data-theme="doodle"] .settings-page .settings-section input[type="text"],
+:root[data-theme="doodle"] .settings-page .settings-section input[type="file"] {
+  border: 2px solid #151515;
+  background: #ffffff;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section button,
+:root[data-theme="doodle"] #new-tab-button {
+  background: #ffffff;
+  color: #151515;
+  border: 2px solid #151515;
+  box-shadow: 3px 3px 0 var(--accent);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section button:hover,
+:root[data-theme="doodle"] #new-tab-button:hover {
+  background: #ffe7e7;
+}
+
+:root[data-theme="super-mario-64"] body::before {
+  background-image:
+    linear-gradient(color-mix(in srgb, #ffffff 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, #ffffff 12%, transparent) 1px, transparent 1px);
+  background-position: 0 0;
+  background-size: 48px 48px;
+  opacity: 0.22;
+}
+
+:root[data-theme="super-mario-64"] .settings-header h1,
+:root[data-theme="super-mario-64"] .settings-header p {
+  color: #ffffff;
+  text-shadow: 0 2px 10px color-mix(in srgb, #12346f 72%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #1b3f7f 84%, transparent), color-mix(in srgb, #245b28 82%, transparent));
+  border: 1px solid color-mix(in srgb, #f2d326 76%, #ffffff 24%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 20%, transparent),
+    0 12px 26px color-mix(in srgb, #12346f 26%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .navbar,
+:root[data-theme="super-mario-64"] .navbar-right::before {
+  background: color-mix(in srgb, #12346f 92%, transparent);
+  border-color: #f2d326;
+  box-shadow: 0 10px 22px color-mix(in srgb, #12346f 28%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section button,
+:root[data-theme="super-mario-64"] #new-tab-button {
+  background: #e22b12;
+  border-color: #f2d326;
+  color: #ffffff;
+}
+
+:root[data-theme="super-mario-64"] .settings-page #cloakSelect,
+:root[data-theme="super-mario-64"] .settings-page #proxySelect,
+:root[data-theme="super-mario-64"] .settings-page #themeSelect,
+:root[data-theme="super-mario-64"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, #d9f3ff 92%, transparent);
+  border-color: #f2d326;
+  color: #16306b;
+}
+
+:root[data-theme="cut-the-rope"] body::after {
+  filter: saturate(1.08) brightness(1.04);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #6d9f1d 22%, transparent), color-mix(in srgb, #5b3a20 84%, transparent));
+  border: 1px solid #bd8a4b;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #f1e4c8 24%, transparent),
+    0 12px 26px color-mix(in srgb, #2e1d10 26%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .navbar,
+:root[data-theme="cut-the-rope"] .navbar-right::before {
+  background: color-mix(in srgb, #4a2d18 94%, transparent);
+  border-color: #bd8a4b;
+  box-shadow: 0 10px 22px color-mix(in srgb, #2e1d10 30%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section button,
+:root[data-theme="cut-the-rope"] #new-tab-button {
+  background: linear-gradient(180deg, #9de01f, #6d9f1d);
+  border-color: #4a2d18;
+  color: #ffffff;
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, #4a2d18 42%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page #cloakSelect,
+:root[data-theme="cut-the-rope"] .settings-page #proxySelect,
+:root[data-theme="cut-the-rope"] .settings-page #themeSelect,
+:root[data-theme="cut-the-rope"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, #f4ecd9 90%, transparent);
+  border-color: #bd8a4b;
+  color: #39230f;
+}
+
+:root[data-theme="doodle"] body::after {
+  opacity: 0.48;
+  filter: saturate(1.02) brightness(1.1);
+}
+
+:root[data-theme="doodle"] .settings-header h1,
+:root[data-theme="doodle"] .settings-header p {
+  color: #161616;
+  text-shadow: 0 1px 0 #fffdf8;
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section {
+  background: color-mix(in srgb, #fbf8ef 92%, transparent);
+  border: 1px solid #3b3832;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 68%, transparent),
+    4px 4px 0 color-mix(in srgb, #4f85d8 34%, transparent);
+}
+
+:root[data-theme="doodle"] .navbar,
+:root[data-theme="doodle"] .navbar-right::before {
+  background: #2c2b28;
+  border: 1px solid #3b3832;
+  box-shadow: 4px 4px 0 color-mix(in srgb, #4f85d8 36%, transparent);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section select,
+:root[data-theme="doodle"] .settings-page .settings-section input[type="url"],
+:root[data-theme="doodle"] .settings-page .settings-section input[type="text"],
+:root[data-theme="doodle"] .settings-page .settings-section input[type="file"],
+:root[data-theme="doodle"] .settings-page #cloakSelect,
+:root[data-theme="doodle"] .settings-page #proxySelect,
+:root[data-theme="doodle"] .settings-page #themeSelect,
+:root[data-theme="doodle"] .settings-page #panicUrlInput {
+  background: #fffdf8;
+  border: 1px solid #3b3832;
+  color: #161616;
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, #3b3832 12%, transparent);
+}
+
+:root[data-theme="doodle"] .settings-page .settings-section button,
+:root[data-theme="doodle"] #new-tab-button {
+  background: #4f85d8;
+  border: 1px solid #2c4d84;
+  color: #ffffff;
+  box-shadow: 2px 2px 0 color-mix(in srgb, #d76a75 42%, transparent);
+}
+
+:root[data-theme="super-mario-64"] {
+  --sm64-sky: #6ec7e8;
+  --sm64-cloud: #d7eef6;
+  --sm64-grass: #1e5a3a;
+  --sm64-grass-2: #2f7445;
+  --sm64-blue: #0f3f78;
+  --sm64-red: #e5391c;
+}
+
+:root[data-theme="super-mario-64"] body::after {
+  filter: saturate(1.05) brightness(1.06);
+}
+
+:root[data-theme="super-mario-64"] body::before {
+  background-image:
+    linear-gradient(color-mix(in srgb, #ffffff 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, #ffffff 10%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.16;
+}
+
+:root[data-theme="super-mario-64"] .settings-header h1,
+:root[data-theme="super-mario-64"] .settings-header p {
+  color: #ffffff;
+  text-shadow: 0 2px 12px color-mix(in srgb, var(--sm64-blue) 78%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-blue) 34%, transparent), color-mix(in srgb, var(--sm64-grass) 82%, transparent));
+  border: 1px solid color-mix(in srgb, var(--sm64-sky) 74%, #ffffff 26%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 18%, transparent),
+    0 12px 26px color-mix(in srgb, var(--sm64-blue) 24%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .navbar,
+:root[data-theme="super-mario-64"] .navbar-right::before,
+:root[data-theme="super-mario-64"] #tabbar,
+:root[data-theme="super-mario-64"] #footer,
+:root[data-theme="super-mario-64"] #footer-toggle,
+:root[data-theme="super-mario-64"] .bottom-bar {
+  background: color-mix(in srgb, var(--sm64-blue) 92%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-sky) 54%, transparent);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--sm64-blue) 24%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .proxy-tab.is-active,
+:root[data-theme="super-mario-64"] #bookmarkbar {
+  background: color-mix(in srgb, var(--sm64-grass) 88%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-sky) 54%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section button,
+:root[data-theme="super-mario-64"] #new-tab-button,
+:root[data-theme="super-mario-64"] .iframe-action-button {
+  background: linear-gradient(180deg, #f04a2d, var(--sm64-red));
+  border-color: color-mix(in srgb, var(--sm64-cloud) 60%, var(--sm64-blue) 40%);
+  color: #ffffff;
+}
+
+:root[data-theme="super-mario-64"] .settings-page #cloakSelect,
+:root[data-theme="super-mario-64"] .settings-page #proxySelect,
+:root[data-theme="super-mario-64"] .settings-page #themeSelect,
+:root[data-theme="super-mario-64"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, var(--sm64-cloud) 92%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-sky) 74%, #ffffff 26%);
+  color: var(--sm64-blue);
+}
+
+:root[data-theme="cut-the-rope"] {
+  --ctr-cardboard: #c6a16b;
+  --ctr-cardboard-dark: #6b482b;
+  --ctr-cardboard-mid: #8b633b;
+  --ctr-cardboard-light: #e5c491;
+  --ctr-corrugation: #b27b43;
+  --ctr-green: #7fbf2a;
+  --ctr-green-dark: #4f7e1c;
+}
+
+:root[data-theme="cut-the-rope"] body::after {
+  filter: saturate(0.96) brightness(1.05);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #ffffff 4%, transparent) 0 1px, transparent 1px 18px),
+    linear-gradient(180deg, color-mix(in srgb, var(--ctr-cardboard-light) 76%, transparent), color-mix(in srgb, var(--ctr-cardboard-mid) 86%, transparent));
+  border: 1px solid color-mix(in srgb, var(--ctr-corrugation) 82%, #fff0c8 18%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff0c8 34%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--ctr-cardboard-dark) 20%, transparent),
+    0 12px 26px color-mix(in srgb, #2e1d10 20%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .navbar,
+:root[data-theme="cut-the-rope"] .navbar-right::before,
+:root[data-theme="cut-the-rope"] #tabbar,
+:root[data-theme="cut-the-rope"] #footer,
+:root[data-theme="cut-the-rope"] #footer-toggle,
+:root[data-theme="cut-the-rope"] .bottom-bar {
+  background: color-mix(in srgb, var(--ctr-cardboard-dark) 94%, transparent);
+  border-color: color-mix(in srgb, var(--ctr-corrugation) 78%, transparent);
+  box-shadow: 0 10px 22px color-mix(in srgb, #2e1d10 28%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .proxy-tab.is-active,
+:root[data-theme="cut-the-rope"] #bookmarkbar {
+  background: color-mix(in srgb, var(--ctr-green-dark) 72%, var(--ctr-cardboard-dark) 28%);
+  border-color: color-mix(in srgb, var(--ctr-green) 62%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page .settings-section button,
+:root[data-theme="cut-the-rope"] #new-tab-button,
+:root[data-theme="cut-the-rope"] .iframe-action-button {
+  background: linear-gradient(180deg, #94d83a, var(--ctr-green-dark));
+  border-color: color-mix(in srgb, var(--ctr-cardboard-dark) 72%, #fff0c8 28%);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff0c8 24%, transparent),
+    inset 0 -2px 0 color-mix(in srgb, var(--ctr-cardboard-dark) 34%, transparent);
+}
+
+:root[data-theme="cut-the-rope"] .settings-page #cloakSelect,
+:root[data-theme="cut-the-rope"] .settings-page #proxySelect,
+:root[data-theme="cut-the-rope"] .settings-page #themeSelect,
+:root[data-theme="cut-the-rope"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, #f5e7cf 92%, transparent);
+  border-color: color-mix(in srgb, var(--ctr-corrugation) 84%, transparent);
+  color: #3c2717;
+}
+
+:root[data-theme="super-mario-64"] {
+  --sm64-cream: #f4ead8;
+  --sm64-stone: #d7cfc3;
+  --sm64-check: #151515;
+  --sm64-sky: #8fd6ee;
+  --sm64-cloud: #f7fbff;
+  --sm64-grass: #3f7d31;
+  --sm64-olive: #626f26;
+  --sm64-water: #173f9e;
+  --sm64-teal: #36b7b3;
+  --sm64-sand: #dfbf78;
+  --sm64-caramel: #b98235;
+  --sm64-lava: #f05a18;
+  --sm64-molten: #bf1718;
+  --sm64-volcanic: #363637;
+  --sm64-carpet: #8f171b;
+  --sm64-door: #6b3f24;
+  --sm64-star: #f5d329;
+}
+
+:root[data-theme="super-mario-64"] body::after {
+  filter: saturate(1.02) brightness(1.08);
+}
+
+:root[data-theme="super-mario-64"] body::before {
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, var(--sm64-check) 22%, transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--sm64-check) 22%, transparent) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--sm64-cloud) 40%, transparent) 75%),
+    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--sm64-cloud) 40%, transparent) 75%);
+  background-position: 0 0, 0 18px, 18px -18px, -18px 0;
+  background-size: 36px 36px;
+  opacity: 0.18;
+}
+
+:root[data-theme="super-mario-64"] .settings-header h1,
+:root[data-theme="super-mario-64"] .settings-header p {
+  color: var(--sm64-cloud);
+  text-shadow:
+    0 2px 0 color-mix(in srgb, var(--sm64-door) 70%, transparent),
+    0 0 14px color-mix(in srgb, var(--sm64-water) 34%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sm64-cloud) 18%, transparent) 0 1px, transparent 1px 34px),
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-cream) 88%, transparent), color-mix(in srgb, var(--sm64-stone) 78%, transparent));
+  border: 1px solid color-mix(in srgb, var(--sm64-door) 76%, var(--sm64-star) 24%);
+  color: #23180f;
+  box-shadow:
+    inset 0 3px 0 color-mix(in srgb, var(--sm64-carpet) 72%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--sm64-cloud) 54%, transparent),
+    0 12px 26px color-mix(in srgb, var(--sm64-door) 20%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(2n) {
+  border-color: color-mix(in srgb, var(--sm64-water) 54%, var(--sm64-door) 46%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(3n) {
+  border-color: color-mix(in srgb, var(--sm64-grass) 58%, var(--sm64-door) 42%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n) {
+  border-color: color-mix(in srgb, var(--sm64-sand) 70%, var(--sm64-door) 30%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(5n) {
+  border-color: color-mix(in srgb, var(--sm64-lava) 58%, var(--sm64-volcanic) 42%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section h2,
+:root[data-theme="super-mario-64"] .settings-page .settings-section p,
+:root[data-theme="super-mario-64"] .settings-page .settings-section label,
+:root[data-theme="super-mario-64"] .settings-section h2,
+:root[data-theme="super-mario-64"] .settings-section h3,
+:root[data-theme="super-mario-64"] .settings-section p {
+  color: #23180f;
+  text-shadow: none;
+}
+
+:root[data-theme="super-mario-64"] .navbar,
+:root[data-theme="super-mario-64"] .navbar-right::before,
+:root[data-theme="super-mario-64"] #tabbar,
+:root[data-theme="super-mario-64"] #footer,
+:root[data-theme="super-mario-64"] #footer-toggle,
+:root[data-theme="super-mario-64"] .bottom-bar {
+  background: color-mix(in srgb, var(--sm64-door) 92%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-star) 58%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--sm64-star) 18%, transparent),
+    0 10px 22px color-mix(in srgb, var(--sm64-door) 28%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .proxy-tab.is-active,
+:root[data-theme="super-mario-64"] #bookmarkbar {
+  background:
+    linear-gradient(90deg, var(--sm64-check) 0 12px, var(--sm64-cloud) 12px 24px);
+  background-size: 24px 24px;
+  border-color: var(--sm64-carpet);
+  color: #23180f;
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section button,
+:root[data-theme="super-mario-64"] #new-tab-button,
+:root[data-theme="super-mario-64"] .iframe-action-button {
+  background: linear-gradient(180deg, #c93638, var(--sm64-carpet));
+  border-color: color-mix(in srgb, var(--sm64-star) 74%, var(--sm64-door) 26%);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--sm64-star) 24%, transparent),
+    inset 0 -2px 0 color-mix(in srgb, var(--sm64-door) 36%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page #cloakSelect,
+:root[data-theme="super-mario-64"] .settings-page #proxySelect,
+:root[data-theme="super-mario-64"] .settings-page #themeSelect,
+:root[data-theme="super-mario-64"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, var(--sm64-cloud) 90%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-door) 60%, var(--sm64-star) 40%);
+  color: #23180f;
+}
+
+:root[data-theme="super-mario-64"] {
+  --sm64-grass-field: #4f8a2d;
+  --sm64-olive-field: #5f6f25;
+  --sm64-rock: #777a74;
+  --sm64-water-deep: #173f9e;
+  --sm64-water-teal: #36b7b3;
+  --sm64-water-light: #8bd9d6;
+  --sm64-sand-light: #ead7a8;
+  --sm64-sand: #dfbf78;
+  --sm64-caramel: #b98235;
+  --sm64-lava-orange: #ff7a16;
+  --sm64-lava-red: #bf1718;
+  --sm64-volcanic: #333437;
+}
+
+:root[data-theme="super-mario-64"] body::after {
+  filter: saturate(1.14) brightness(1.03);
+}
+
+:root[data-theme="super-mario-64"] body::before {
+  background-image:
+    linear-gradient(135deg, color-mix(in srgb, var(--sm64-rock) 18%, transparent) 25%, transparent 25%),
+    linear-gradient(225deg, color-mix(in srgb, var(--sm64-water-light) 14%, transparent) 25%, transparent 25%),
+    linear-gradient(45deg, color-mix(in srgb, var(--sm64-sand-light) 12%, transparent) 25%, transparent 25%),
+    linear-gradient(315deg, color-mix(in srgb, var(--sm64-lava-orange) 10%, transparent) 25%, transparent 25%);
+  background-position: 0 0, 0 24px, 24px 0, 24px 24px;
+  background-size: 48px 48px;
+  opacity: 0.22;
+}
+
+:root[data-theme="super-mario-64"] .settings-header h1,
+:root[data-theme="super-mario-64"] .settings-header p {
+  color: #ffffff;
+  text-shadow:
+    0 2px 0 color-mix(in srgb, var(--sm64-water-deep) 70%, transparent),
+    0 0 14px color-mix(in srgb, var(--sm64-volcanic) 45%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section {
+  color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--sm64-rock) 76%, #ffffff 24%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 16%, transparent),
+    0 12px 26px color-mix(in srgb, #000 18%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 1) {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--sm64-rock) 22%, transparent) 0 18%, transparent 18% 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-grass-field) 88%, transparent), color-mix(in srgb, var(--sm64-olive-field) 88%, transparent));
+  border-color: color-mix(in srgb, var(--sm64-rock) 72%, var(--sm64-grass-field) 28%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 2) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-water-deep) 88%, transparent), color-mix(in srgb, var(--sm64-water-teal) 70%, transparent));
+  border-color: color-mix(in srgb, var(--sm64-water-light) 70%, var(--sm64-water-deep) 30%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 3) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-sand-light) 90%, transparent), color-mix(in srgb, var(--sm64-caramel) 78%, transparent));
+  border-color: color-mix(in srgb, var(--sm64-caramel) 76%, #ffffff 24%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n) {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--sm64-volcanic) 26%, transparent) 0 22%, transparent 22% 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--sm64-lava-orange) 82%, transparent), color-mix(in srgb, var(--sm64-lava-red) 82%, transparent));
+  border-color: color-mix(in srgb, var(--sm64-volcanic) 62%, var(--sm64-lava-orange) 38%);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section h2,
+:root[data-theme="super-mario-64"] .settings-page .settings-section p,
+:root[data-theme="super-mario-64"] .settings-page .settings-section label,
+:root[data-theme="super-mario-64"] .settings-section h2,
+:root[data-theme="super-mario-64"] .settings-section h3,
+:root[data-theme="super-mario-64"] .settings-section p {
+  color: #ffffff;
+  text-shadow: 0 1px 3px color-mix(in srgb, #000 36%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 3) h2,
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 3) p,
+:root[data-theme="super-mario-64"] .settings-page .settings-section:nth-child(4n + 3) label {
+  color: #332514;
+  text-shadow: 0 1px 0 color-mix(in srgb, #ffffff 34%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .navbar,
+:root[data-theme="super-mario-64"] .navbar-right::before,
+:root[data-theme="super-mario-64"] #tabbar,
+:root[data-theme="super-mario-64"] #footer,
+:root[data-theme="super-mario-64"] #footer-toggle,
+:root[data-theme="super-mario-64"] .bottom-bar {
+  background: color-mix(in srgb, var(--sm64-volcanic) 88%, var(--sm64-water-deep) 12%);
+  border-color: color-mix(in srgb, var(--sm64-water-light) 46%, transparent);
+  box-shadow: 0 10px 22px color-mix(in srgb, #000 25%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .proxy-tab.is-active,
+:root[data-theme="super-mario-64"] #bookmarkbar {
+  background: color-mix(in srgb, var(--sm64-water-deep) 76%, var(--sm64-teal, #36b7b3) 24%);
+  border-color: color-mix(in srgb, var(--sm64-water-light) 58%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page .settings-section button,
+:root[data-theme="super-mario-64"] #new-tab-button,
+:root[data-theme="super-mario-64"] .iframe-action-button {
+  background: linear-gradient(180deg, var(--sm64-lava-orange), var(--sm64-lava-red));
+  border-color: color-mix(in srgb, var(--sm64-volcanic) 64%, var(--sm64-lava-orange) 36%);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #ffffff 18%, transparent),
+    inset 0 -2px 0 color-mix(in srgb, var(--sm64-volcanic) 35%, transparent);
+}
+
+:root[data-theme="super-mario-64"] .settings-page #cloakSelect,
+:root[data-theme="super-mario-64"] .settings-page #proxySelect,
+:root[data-theme="super-mario-64"] .settings-page #themeSelect,
+:root[data-theme="super-mario-64"] .settings-page #panicUrlInput {
+  background: color-mix(in srgb, #f8fbff 90%, transparent);
+  border-color: color-mix(in srgb, var(--sm64-rock) 54%, transparent);
+  color: #142847;
+  text-shadow: none;
+}
+
+:root[data-theme] .proxy-tab,
+:root[data-theme] .proxy-tab:hover,
+:root[data-theme] .proxy-tab.is-active,
+:root[data-theme] .proxy-tab:active,
+:root[data-theme] #new-tab-button,
+:root[data-theme] #new-tab-button:hover,
+:root[data-theme] #new-tab-button:active {
+  border-color: transparent !important;
+}
+
+:root[data-theme] .proxy-tab,
+:root[data-theme] .bookmark-item {
+  cursor: grab !important;
+}
+
+:root[data-theme] .proxy-tab:active,
+:root[data-theme] .proxy-tab-drag-ghost,
+:root[data-theme] .bookmark-item:active,
+:root[data-theme] .bookmark-drag-ghost {
+  cursor: grabbing !important;
+}
+
+:root[data-theme] .proxy-tab-close,
+:root[data-theme] #new-tab-button,
+:root[data-theme] #bookmark-toggle.headericon-button,
+:root[data-theme] .bookmark-folder-child-remove {
+  cursor: var(--cursor-link, url("/css/comiclink.cur") 0 0), pointer !important;
+}
+
+:root[data-theme] .bookmark-menu,
+:root[data-theme] .bookmark-folder-dialog {
+  border: 0 !important;
+}
+
+:root[data-theme] .bookmark-menu {
+  min-width: 168px !important;
+  padding: 6px !important;
+}
+
+:root[data-theme] .bookmark-menu button,
+:root[data-theme] .bookmark-menu button:hover,
+:root[data-theme] .bookmark-menu button:active,
+:root[data-theme] .bookmark-menu button:focus {
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+:root[data-theme] .bookmark-menu button i {
+  width: 14px !important;
+  font-size: 12px !important;
+  opacity: 0.78;
+}
+
+:root[data-theme] .bookmark-folder-dialog {
+  width: min(360px, calc(100vw - 32px)) !important;
+  border: 0 !important;
+  box-shadow: 0 12px 28px color-mix(in srgb, #000 28%, transparent) !important;
+}
+
+:root[data-theme] #history-search-form,
+:root[data-theme] #history-page-header,
+:root[data-theme] .history-row {
+  border-bottom: 0 !important;
+}
+

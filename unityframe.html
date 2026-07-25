@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/png" href="/png/logo.png"/>
+      <title>Truffled - Algebra</title>
+        <meta name="title" content="Truffled - Interactive Learning Resources">
+        <meta name="description" content="Truffled is an educational platform offering interactive activities, brain-training challenges, and creative learning tools for students.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://truffled.lol/">
+        <meta property="og:title" content="Truffled - Interactive Learning Resources">
+        <meta property="og:description" content="Explore engaging educational content, problem-solving challenges, and interactive tools designed to support learning.">
+        <meta property="og:image" content="https://truffled.lol/png/logo.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://truffled.lol/">
+        <meta name="twitter:title" content="Truffled - Interactive Learning Resources">
+        <meta name="twitter:description" content="A safe and clean educational site offering interactive activities and learning-focused tools.">
+        <meta name="twitter:image" content="https://truffled.lol/png/logo.png">
+        <link rel="canonical" href="https://truffled.lol/">
+      <link rel="stylesheet" href="/css/style.css">
+      <link rel="stylesheet" href="/css/theme.css">
+      <script src="/js/theme.js" defer></script>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   </head>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXHK7Q7G3Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PXHK7Q7G3Z');
+</script>
+   <body class="index-page">
+      <div class="navbar-right">
+          <a href="/"><img src="/png/house-solid.svg" alt="h"></a>
+          <a href="/g"><img src="/png/gamepad-solid.svg" alt="g"></a>
+          <a href="/a"><img src="/png/apps.svg" alt="a"></a>
+          <a href="/t"><img src="/png/tool.svg" alt="t"></a>
+          <a href="https://discord.gg/vVqY36mzvj"><img src="/png/other.svg" alt="d"></a>
+          <a href="/s"><img src="/png/gear-solid.svg" alt="s"></a>
+      </div>
+      <div class="content">
+         <div class="iframe-container">
+            <iframe id="gameframe" class="gameframe" src="/404.html" allow="autoplay; fullscreen; gamepad; cross-origin-isolated"></iframe>
+            <div class="bottom-bar">
+               <div class="iframeiconshere">
+                  <a href="javascript:void(0)" id="fullscreen" title="full"><i class="fas fa-expand"></i></a>
+                  <a href="javascript:void(0)" id="iframeicons" onclick="document.getElementById('gameframe').src = document.getElementById('gameframe').src;"><i class="fas fa-sync-alt"></i></a>
+                  <a href="javascript:void(0)" id="copylink"><i class="fas fa-link"></i></a>
+                  <a href="javascript:void(0)" id="aboutblank"><i class="fas fa-external-link-alt"></i></a>
+                  <a href="javascript:void(0)" id="downloadgame"><i class="fas fa-download"></i></a>
+                  <a href="javascript:void(0)" id="modupload" title="Mod menu" aria-label="Mod menu"><i class="fas fa-upload"></i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="/js/panic.js"></script>
+      <script src="/active/uv.bundle.js"></script>
+      <script src="/active/uv.config.js"></script>
+      <script src="/baremux/index.js"></script>
+      <script src="/js/proxyregion.js"></script>
+      <script src="/js/proxyframebootstrap.js"></script>
+   </body>
+<script>
+document.getElementById('aboutblank').addEventListener('click', function() {
+    const iframe = document.getElementById('gameframe');
+    const currentUrl = iframe.src;
+    if (currentUrl && currentUrl !== 'https://truffled.lol/404.html') {
+        const win = window.open('about:blank');
+        const doc = win.document;
+        doc.open();
+        doc.close();
+        doc.title = 'New Tab';
+        doc.body.style.margin = '0';
+        doc.body.style.overflow = 'hidden';
+        const frame = doc.createElement('iframe');
+        frame.src = currentUrl;
+        frame.style.cssText = 'position:fixed;top:0;left:0;bottom:0;right:0;width:100%;height:100%;border:none;margin:0;padding:0;overflow:hidden;';
+        doc.body.appendChild(frame);
+    } else {
+        const aboutBlankBtn = document.getElementById('aboutblank');
+        const originalHTML = aboutBlankBtn.innerHTML;
+        aboutBlankBtn.innerHTML = '<i class="fas fa-times"></i>';
+        aboutBlankBtn.style.color = '#FF5722';
+        setTimeout(() => {
+            aboutBlankBtn.innerHTML = originalHTML;
+            aboutBlankBtn.style.color = '';
+        }, 1500);
+    }
+});
+</script>
+<script>
+document.addEventListener("keydown", function(event) {
+    if (event.key === "]") {
+        window.location.href = "/extra/la.mov";
+    }
+});
+</script>
+<script>
+document.getElementById('copylink').addEventListener('click', function() {
+    const copyBtn = document.getElementById('copylink');
+    const originalHTML = copyBtn.innerHTML;
+    const iframe = document.getElementById('gameframe');
+    const currentUrl = iframe.src;
+    if (currentUrl && !currentUrl.includes('/404.html')) {
+        const fullUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(currentUrl);
+        navigator.clipboard.writeText(fullUrl).then(() => {
+            copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            const textArea = document.createElement('textarea');
+            textArea.value = fullUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.innerHTML = originalHTML;
+                copyBtn.classList.remove('copied');
+            }, 2000);
+        });
+    } else {
+        copyBtn.innerHTML = '<i class="fas fa-times"></i>';
+        copyBtn.style.color = '#FF5722';
+        setTimeout(() => {
+            copyBtn.innerHTML = originalHTML;
+            copyBtn.style.color = '';
+        }, 1500);
+    }
+});
+</script>
+<script>
+document.getElementById('modupload').addEventListener('click', function() {
+    alert('wip, this is a mod menu.');
+});
+</script>
+      <script src="/js/cloak.js"></script>
+<script src="/js/file.js" defer></script>
+<script src="/js/fullscreen.js" defer></script>
+<script src="/js/nav.js"></script>
+<script src="/js/ads.js"></script>
+</html>
+<script>
+   window.onload = function () {
+   	alert("This is a Unity game, It may load slowly depending on your device.");
+   };
+</script>
